@@ -3,10 +3,6 @@ import json
 input_file = open("input.json")
 input = json.load(input_file)
 
-print("*********")
-print(input)
-print("*********")
-
 import os
 os.system('pip install selenium')
 
@@ -27,7 +23,7 @@ results = []
 with webdriver.Remote(command_executor="http://127.0.0.1:4444/wd/hub", options=options) as driver:
     for url in urls:
         date = None
-        driver.get(url)
+        driver.get(f"https://web.archive.org/web/changes/{url}")
         a = ActionChains(driver)
         try:
             WebDriverWait(driver, 15).until(EC.presence_of_element_located((("xpath", "//*[contains(@fill, 'rgb')]"))))
@@ -48,7 +44,7 @@ with webdriver.Remote(command_executor="http://127.0.0.1:4444/wd/hub", options=o
             pass
 
         output = {
-            "URL": url.split('/')[-1],
+            "URL": url,
             "Date": date,
             }
         results.append(output)
