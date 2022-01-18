@@ -4,15 +4,8 @@ input_file = open("input.json")
 input = json.load(input_file)
 
 import os
-os.system('pip install docker selenium')
+os.system('pip install selenium')
 
-# start selenium container
-from time import sleep
-import docker
-
-client = docker.from_env()
-client.containers.run("selenium/standalone-chrome:latest", ports={'4444': 4444}, detach=True, remove=True)
-sleep(10)
 
 from datetime import datetime
 from selenium import webdriver
@@ -28,7 +21,7 @@ options.add_argument("disable-gpu")
 urls = input["input"]
 
 results = []
-with webdriver.Remote(command_executor="http://127.0.0.1:4444", options=options) as driver:
+with webdriver.Chrome(options=options) as driver:
     for url in urls:
         date = None
         driver.get(f"https://web.archive.org/web/changes/{url}")
@@ -56,9 +49,6 @@ with webdriver.Remote(command_executor="http://127.0.0.1:4444", options=options)
             "Date": date,
             }
         results.append(output)
-
-# stop selenium container
-client.containers.list()[0].stop()
 
 
 output_file = open("output.json", 'w')
