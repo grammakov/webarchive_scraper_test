@@ -2,6 +2,9 @@ import json
 
 input_file = open("input.json")
 input = json.load(input_file)
+print("*********")
+print(input)
+print("*********")
 
 import os
 os.system('pip install selenium')
