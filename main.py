@@ -2,6 +2,7 @@ import json
 
 input_file = open("input.json")
 input = json.load(input_file)
+
 print("*********")
 print(input)
 print("*********")
@@ -20,7 +21,7 @@ options.add_argument('headless')
 options.add_argument('window-size=1920x1080')
 options.add_argument("disable-gpu")
 
-urls = input[0]["Got input"]["input"]
+urls = input["input"]
 
 results = []
 with webdriver.Remote(command_executor="http://127.0.0.1:4444/wd/hub", options=options) as driver:
